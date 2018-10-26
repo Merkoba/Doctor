@@ -44,7 +44,7 @@
 	<code>
 		<doc header>My Project</doc>
 
-		<description>The introduction to my project</description>
+		<doc description>The introduction to my project</doc description>
 		
 		<doc section name='What is it'>
 
