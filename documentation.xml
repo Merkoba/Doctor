@@ -15,7 +15,13 @@
 	
 	It can be configured through some settings and different sections of the documentation can be created, which are fully HTML compatible.
 
-	Then to generate the single HTML file output, the source file is passed to doctormake: <code>doctormake input.html</code>
+	To generate the single HTML file output, the source file is passed to doctormake: 
+
+	<code>doctormake input.xml output.html</code>
+
+	Or manually:
+
+	<code>node doctor.js input.xml output.html</code>
 	
 	This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible on the work required to create documentations that fit the scope, in a quick painless manner.
 
