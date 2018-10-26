@@ -7,7 +7,7 @@
 
 	NPM Package: <a href='http://npm.com'>doctormake</a>
 
-	Github Repo: <a href='http://github.com'>http://github.com</a>
+	GitHub Repo: <a href='https://github.com/madprops/Doctor'>https://github.com/madprops/Doctor</a>
 </doc>
 
 <doc section name='What Is It'>
@@ -27,7 +27,7 @@
 </doc>
 
 <doc section name='How Does It Work'>
-	Doctor produces a single HTML file output, without external dependencies, which includes all Javascript and CSS.
+	Doctor produces a single HTML file output, without external dependencies, which includes all JavaScript and CSS.
 
 	To do this, a file with all necessary data, which can have any name or extension, must be sent to doctormake.
 
@@ -159,7 +159,7 @@
 
 	<code><doc script></code>
 
-	Additional Javascript you might want to add can go here. This is added after the default Javascript declarations, at the bottom of &lt;body&gt;.
+	Additional JavaScript you might want to add can go here. This is added after the default JavaScript declarations, at the bottom of &lt;body&gt;.
 
 
 	<code><doc favicon></code>
@@ -200,7 +200,7 @@
 	
 	And then to use it: <code>doctormake input output</code>
 
-	To run it manually download a copy from [github link]
+	To run it manually download a copy from <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a>.
 
 	Run <code>npm install</code> in the directory.
 
@@ -208,7 +208,7 @@
 </doc>
 
 <doc section name='Feedback'>
-	If there's a problem regarding Doctor, or you have an idea to improve it, you can try submitting an Issue in the [githublink] where I might respond.
+	If there's a problem regarding Doctor, or you have an idea to improve it, you can try submitting an Issue in the <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a> where I might respond.
 </doc>
 
 <doc section name='License'>

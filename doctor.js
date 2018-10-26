@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const doctor_version = "v1.0.0"
-const doctor_site_url = "http://github.com"
+const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
 const fs = require("fs")
@@ -21,7 +21,16 @@ function init()
 		return false
 	}
 
-	var file_content = fs.readFileSync(file_path, "utf-8")
+	try
+	{
+		var file_content = fs.readFileSync(file_path, "utf-8")
+	}
+
+	catch(err)
+	{
+		print_error("There was a problem loading that file. Check that the path is correct.")
+		return false
+	}
 
 	file_content = do_safe_parses(file_content)
 
