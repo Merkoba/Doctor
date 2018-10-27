@@ -23,7 +23,7 @@
 
 	<code>node doctor.js input.xml output.html</code>
 	
-	This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible on the work required to create documentations that fit the scope, in a quick painless manner.
+	This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible in the work required to create documentation that fits the scope, in a quick painless manner.
 
 	This is not a tool to automatically generate documentation from source code.
 	
