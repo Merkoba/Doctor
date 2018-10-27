@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.8"
+const doctor_version = "v1.0.0-rc.9"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -237,8 +237,8 @@ function generate_html()
 
 			sections_html += `
 			<hr class='doctor_section_separator'>
+			<a name="${cname}" class='doctor_section_anchor'></a>
 			<div class='doctor_section'>
-				<a name="${cname}" class='doctor_section_anchor'></a>
 				<h2 class='doctor_section_header'>${name}</h2><h2 class='doctor_section_feedback'>*</h2><div>${section.content}</div>
 			</div>
 			`
@@ -259,7 +259,7 @@ function generate_html()
 	<html>
 
 	<head>
-
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 		<title>${title}</title>
 		<link rel='shortcut icon' href='${favicon}' type='image/x-icon'>
 		<style>
@@ -1023,7 +1023,7 @@ function generate_javascript()
 
 					else
 					{
-						el.scrollIntoView()
+						window.scrollTo(0, max)
 					}
 				}
 			}
