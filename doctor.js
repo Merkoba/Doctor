@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.16"
+const doctor_version = "v1.0.0-rc.17"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -288,7 +288,7 @@ function generate_html()
 				padding: 0;
 				margin: 0;
 				font-size: 18px;
-				background-color: var(--wcolor);
+				background-color: white;
 				color: var(--fcolor);
 				scroll-behavior:smooth;
 				width: 100%;
@@ -311,7 +311,7 @@ function generate_html()
 				margin: 0 auto;
 				padding-left: 2em;
 				padding-right: 2em;
-				background-color: var(--wcolor);
+				background-color: white;
 				color: var(--fcolor);
 			}
 
@@ -401,7 +401,7 @@ function generate_html()
 				top: 0;
 				flex-direction: row;
 				display: none;
-				background-color: var(--wcolor);
+				background-color: white;
 				color: var(--fcolor);
 				border-left: 1px solid grey;
 				border-bottom: 1px solid grey;
