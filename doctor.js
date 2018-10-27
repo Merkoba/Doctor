@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.15"
+const doctor_version = "v1.0.0-rc.16"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -274,14 +274,22 @@ function generate_html()
 		<title>${title}</title>
 		<link rel='shortcut icon' href='${favicon}' type='image/x-icon'>
 		<style>
+
+			:root 
+			{
+				--fcolor: rgba(0, 0, 0, 0.9);
+				--wcolor: rgba(255, 255, 255, 0.9);
+				--tcolor: ${theme};
+			}
+
 			body, html
 			{
 				font-family: sans-serif;
 				padding: 0;
 				margin: 0;
 				font-size: 18px;
-				background-color: white;
-				color: black;
+				background-color: var(--wcolor);
+				color: var(--fcolor);
 				scroll-behavior:smooth;
 				width: 100%;
 				height: 100%;
@@ -303,14 +311,14 @@ function generate_html()
 				margin: 0 auto;
 				padding-left: 2em;
 				padding-right: 2em;
-				background-color: white;
-				color: black;
+				background-color: var(--wcolor);
+				color: var(--fcolor);
 			}
 
 			#doctor_left_edge 
 			{
-				background-color: ${theme};
-				color: white;
+				background-color: var(--tcolor);
+				color: var(--wcolor);
 				flex-grow: 0;
 				flex-shrink: 0;
 				width: 4rem;
@@ -370,7 +378,7 @@ function generate_html()
 
 			a:visited, a:link, a:hover
 			{
-				color: ${theme};
+				color: var(--tcolor);
 				text-decoration: none;
 				transition: text-shadow 500ms;
 			}
@@ -393,8 +401,8 @@ function generate_html()
 				top: 0;
 				flex-direction: row;
 				display: none;
-				background-color: white;
-				color: black;
+				background-color: var(--wcolor);
+				color: var(--fcolor);
 				border-left: 1px solid grey;
 				border-bottom: 1px solid grey;
 				border-right: 1px solid grey;
@@ -492,7 +500,7 @@ function generate_html()
 				left: 0;
 				width: 0;
 				height: 100vh;
-				background-color: ${theme};
+				background-color: var(--tcolor);
 				transition: width 300ms ease-in-out;
 				z-index: 999;
 			}
@@ -529,7 +537,7 @@ function generate_html()
 				position: absolute;
 				right: 0;
 				top: 0;
-				color: white;
+				color: var(--wcolor);
 				padding: 0.5em;
 				font-size: 1.1em;
 				cursor: pointer;
@@ -566,14 +574,14 @@ function generate_html()
 				left: 50%;
 				font-size: 0.7rem;
 				transform: translateX(-50%);
-				color: white;
+				color: var(--wcolor);
 				cursor: pointer;
 				text-decoration: none;
 			}
 
 			a.doctor_edge_menu_item:visited, a.doctor_edge_menu_item:link, a.doctor_edge_menu_item:hover
 			{
-				color: white;
+				color: var(--wcolor);
 				font-size: 1.2em;
 				text-decoration: none;
 				padding-top: 0.8em;
@@ -583,7 +591,7 @@ function generate_html()
 
 			#doctor_edge_menu_main h2
 			{
-				color: white;
+				color: var(--wcolor);
 				cursor: pointer;
 			}
 
