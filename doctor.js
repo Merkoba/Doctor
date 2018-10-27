@@ -895,7 +895,6 @@ function generate_javascript()
 
 						timer = setTimeout(function()
 						{
-							console.log(22)
 							doctor_check_scroll()
 						}, doctor_check_scroll_delay)
 					}
