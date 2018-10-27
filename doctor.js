@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.14"
+const doctor_version = "v1.0.0-rc.15"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -457,12 +457,6 @@ function generate_html()
 			.doctor_section
 			{
 				padding-top: 0.5em;
-			}
-
-			.doctor_sections_menu
-			{
-				padding-top: 0.2em;
-				padding-bottom: 0.5em;
 			}
 
 			.doctor_section_header_container
