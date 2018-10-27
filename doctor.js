@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.10"
+const doctor_version = "v1.0.0-rc.11"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -236,9 +236,9 @@ function generate_html()
 			}
 
 			sections_html += `
-			<hr class='doctor_section_separator'>
-			<a name="${cname}" class='doctor_section_anchor'></a>
 			<div class='doctor_section'>
+				<hr class='doctor_section_separator'>
+				<a name="${cname}" class='doctor_section_anchor'></a>
 				<h2 class='doctor_section_header'>${name}</h2><h2 class='doctor_section_feedback'>*</h2><div>${section.content}</div>
 			</div>
 			`
