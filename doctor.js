@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.17"
+const doctor_version = "v1.0.0-rc.18"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -871,6 +871,7 @@ function generate_javascript()
 		<script>
 
 			var doctor_scroll_timer
+			var doctor_check_scroll_delay = 100
 
 			var doctor_main = document.getElementById("doctor_main")
 			var doctor_edge_menu = document.getElementById("doctor_edge_menu")
@@ -894,8 +895,9 @@ function generate_javascript()
 
 						timer = setTimeout(function()
 						{
+							console.log(22)
 							doctor_check_scroll()
-						}, 200)
+						}, doctor_check_scroll_delay)
 					}
 				})()
 
