@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.12"
+const doctor_version = "v1.0.0-rc.13"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -237,9 +237,20 @@ function generate_html()
 
 			sections_html += `
 			<div class='doctor_section'>
+
 				<hr class='doctor_section_separator'>
+
 				<a name="${cname}" class='doctor_section_anchor'></a>
-				<h2 class='doctor_section_header'>${name}</h2><h2 class='doctor_section_feedback'>*</h2><div>${section.content}</div>
+
+				<div class='doctor_section_header_container'>
+					<h2 class='doctor_section_header'>${name}</h2>
+					<h2 class='doctor_section_feedback'>*</h2>
+				</div>
+
+				<div class='doctor_section_content_container'>
+					${section.content}
+				</div>
+
 			</div>
 			`
 		}
@@ -454,20 +465,30 @@ function generate_html()
 				padding-bottom: 0.5em;
 			}
 
+			.doctor_section_header_container
+			{
+				display: flex;
+				flex-direction: row;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+
 			.doctor_section_header
 			{
 				display: inline-block;
+				white-space: initial;
+			}
+
+			.doctor_section_feedback
+			{
+				display: inline-block;
+				visibility: hidden;
+				margin-left: 1rem;
 			}
 
 			.doctor_section_anchor
 			{
 				display: block;
-			}
-
-			.doctor_section_feedback
-			{
-				display: none;
-				margin-left: 1rem;
 			}
 
 			#doctor_edge_menu
@@ -1091,12 +1112,12 @@ function generate_javascript()
 						{
 							if(n % 2 === 0)
 							{
-								feedback.style.display = "inline-block"
+								feedback.style.visibility = "visible"
 							}
 
 							else
 							{
-								feedback.style.display = "none"
+								feedback.style.visibility = "hidden"
 							}
 
 							n += 1
@@ -1105,7 +1126,7 @@ function generate_javascript()
 							if(n > 25)
 							{
 								clearInterval(interval)
-								feedback.style.display = "none"
+								feedback.style.visibility = "hidden"
 							}
 						}, 100)
 
