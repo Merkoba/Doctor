@@ -182,7 +182,7 @@
 	<code><doc section name='Name Of The Section'></code>
 
 	This is where the actual content of the documentation goes.
-	The name of the section appears on top, with it's content below.
+	The name of the section appears on top, with its content below.
 	Sections are separated by horizontal lines.
 	Every section has an anchor link below the description at the top.
 	An anchor link to it is also added to the left menu.
@@ -202,8 +202,6 @@
 
 	To use it as a command line tool do: <code>npm install -g doctormake</code>
 
-	If you install it without the -g flag you need to run <code>npm install</code>
-	
 	And then to use it: <code>doctormake input output</code>
 
 	To run it manually download a copy from <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a>.

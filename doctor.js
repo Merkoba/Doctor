@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.13"
+const doctor_version = "v1.0.0-rc.14"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -361,7 +361,7 @@ function generate_html()
 			.doctor_section_separator
 			{
 				margin-top: 2rem;
-				margin-bottom: 0.8rem;
+				margin-bottom: 1.7rem;
 				border: 0;
 				height: 0;
 				border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -867,6 +867,9 @@ function generate_javascript()
 {
 	var script = `
 		<script>
+
+			var doctor_scroll_timer
+
 			var doctor_main = document.getElementById("doctor_main")
 			var doctor_edge_menu = document.getElementById("doctor_edge_menu")
 			var doctor_edge_menu_main = document.getElementById("doctor_edge_menu_main")
@@ -877,25 +880,84 @@ function generate_javascript()
 			var doctor_modal_inner = document.getElementById("doctor_modal_inner")
 			var doctor_overlay = document.getElementById("doctor_overlay")
 
-			var doctor_scroll_timer = (function()
+			window.onload = function()
 			{
-				var timer
-
-				return function()
+				doctor_scroll_timer = (function()
 				{
-					clearTimeout(timer)
+					var timer
 
-					timer = setTimeout(function()
+					return function()
 					{
-						doctor_check_scroll()
-					}, 200)
-				}
-			})()
+						clearTimeout(timer)
 
-			window.addEventListener("scroll", function(e)
-			{
-				doctor_scroll_timer()
-			})
+						timer = setTimeout(function()
+						{
+							doctor_check_scroll()
+						}, 200)
+					}
+				})()
+
+				window.addEventListener("scroll", function(e)
+				{
+					doctor_scroll_timer()
+				})
+
+				Array.from(document.querySelectorAll(".doctor_edge_menu_item")).forEach(function(el)
+				{
+					el.addEventListener("click", function()
+					{
+						doctor_hide_edge_menu()
+					})
+				})
+
+				document.getElementById("doctor_main").addEventListener("click", function(e)
+				{
+					var el = e.target
+
+					var tag = el.tagName.toLowerCase()
+
+					if(tag === "img")
+					{
+						doctor_show_modal("<img src='" + el.src + "'>")
+					}
+
+					else if(tag === "a")
+					{
+						if(el.classList.contains("doctor_section_anchor_link"))
+						{
+							doctor_show_feedback(el.getAttribute("href"))
+						}
+					}
+
+					if(doctor_edge_menu.style.width != 0)
+					{
+						doctor_hide_edge_menu()
+					}
+				})
+
+				document.getElementById("doctor_edge_menu_content_inner").addEventListener("click", function(e)
+				{
+					var el = e.target
+
+					var tag = el.tagName.toLowerCase()
+
+					if(tag === "a")
+					{
+						if(el.classList.contains("doctor_section_anchor_link"))
+						{
+							doctor_show_feedback(el.getAttribute("href"))
+						}
+					}
+				})
+
+				document.getElementById("doctor_top_menu").addEventListener("click", function(e)
+				{
+					if(doctor_edge_menu.style.width != 0)
+					{
+						doctor_hide_edge_menu()
+					}
+				})
+			}
 
 			function doctor_get_scrollTop()
 			{
@@ -1135,61 +1197,6 @@ function generate_javascript()
 				}
 			}
 
-			Array.from(document.querySelectorAll(".doctor_edge_menu_item")).forEach(function(el)
-			{
-				el.addEventListener("click", function()
-				{
-					doctor_hide_edge_menu()
-				})
-			})
-
-			document.getElementById("doctor_main").addEventListener("click", function(e)
-			{
-				var el = e.target
-
-				var tag = el.tagName.toLowerCase()
-
-				if(tag === "img")
-				{
-					doctor_show_modal("<img src='" + el.src + "'>")
-				}
-
-				else if(tag === "a")
-				{
-					if(el.classList.contains("doctor_section_anchor_link"))
-					{
-						doctor_show_feedback(el.getAttribute("href"))
-					}
-				}
-
-				if(doctor_edge_menu.style.width != 0)
-				{
-					doctor_hide_edge_menu()
-				}
-			})
-
-			document.getElementById("doctor_edge_menu_content_inner").addEventListener("click", function(e)
-			{
-				var el = e.target
-
-				var tag = el.tagName.toLowerCase()
-
-				if(tag === "a")
-				{
-					if(el.classList.contains("doctor_section_anchor_link"))
-					{
-						doctor_show_feedback(el.getAttribute("href"))
-					}
-				}
-			})
-
-			document.getElementById("doctor_top_menu").addEventListener("click", function(e)
-			{
-				if(doctor_edge_menu.style.width != 0)
-				{
-					doctor_hide_edge_menu()
-				}
-			})
 		</script>
 	`
 
