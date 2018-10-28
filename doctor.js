@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.24"
+const doctor_version = "v1.0.0-rc.25"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -487,11 +487,11 @@ function generate_html()
 			{
 				position: fixed;
 				top: 0;
-				left: 0;
-				width: 0;
+				left: -30rem;
+				width: 30rem;
 				height: 100vh;
 				background-color: var(--tcolor);
-				transition: width 300ms ease-in-out;
+				transition: left 300ms ease-in-out;
 				z-index: 999;
 			}
 
@@ -1367,21 +1367,17 @@ function generate_javascript(options)
 
 			function doctor_show_edge_menu()
 			{
-				doctor_edge_menu.style.width = "30em"
-				
-				setTimeout(function()
-				{
-					doctor_edge_menu_main.style.visibility = "visible"
-					doctor_edge_menu_main.style.opacity = 1
-					doctor_edge_menu_search_input.focus()
-				}, 200)
+				doctor_edge_menu.style.left = "0"
+				doctor_edge_menu_main.style.visibility = "visible"
+				doctor_edge_menu_main.style.opacity = 1
+				doctor_edge_menu_search_input.focus()
 
 				doctor_edge_menu_open = true
 			}
 
 			function doctor_hide_edge_menu()
 			{
-				doctor_edge_menu.style.width = 0
+				doctor_edge_menu.style.left = "-30rem"
 				doctor_edge_menu_main.style.opacity = 0
 				doctor_edge_menu_main.style.visibility = "hidden"
 				doctor_reset_search()
