@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.27"
+const doctor_version = "v1.0.0-rc.28"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -1014,7 +1014,7 @@ function generate_javascript(options)
 
 				doctor_top_menu.addEventListener("click", function(e)
 				{
-					if(doctor_edge_menu.style.width != 0)
+					if(doctor_edge_menu_open)
 					{
 						doctor_hide_edge_menu()
 					}
