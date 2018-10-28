@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.22"
+const doctor_version = "v1.0.0-rc.23"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -126,6 +126,7 @@ function generate_html()
 	var sections_html = ""
 	var edge_sections_menu = ""
 	var favicon = ""
+	var keyboard = true
 
 	for(let obj of objects)
 	{
@@ -172,6 +173,11 @@ function generate_html()
 		else if(obj.type === "favicon")
 		{
 			favicon = obj.content
+		}
+		
+		else if(obj.type === "keyboard")
+		{
+			keyboard = JSON.parse(obj.content)
 		}
 	}
 
@@ -726,7 +732,7 @@ function generate_html()
 
 		</div>
 
-		${generate_javascript()}
+		${generate_javascript({keyboard:keyboard})}
 
 		<script>${script}</script>
 
@@ -870,8 +876,34 @@ function fix_code_sample(s)
 	return s
 }
 
-function generate_javascript()
+function generate_javascript(options)
 {
+	var keyboard_events = ""
+	var menu_keyboard_escape_1 = ""
+
+	if(options.keyboard)
+	{
+		keyboard_events = `
+			document.addEventListener("keyup", function(e)
+			{
+				if(e.key === "Escape")
+				{
+					if(!doctor_edge_menu_open)
+					{
+						doctor_show_edge_menu()
+					}
+
+					else
+					{
+						doctor_reset_or_hide_menu()
+					}
+				}
+			})
+		`
+
+		menu_keyboard_escape_1 = "return false"
+	}
+
 	var script = `
 		<script>
 
@@ -880,6 +912,7 @@ function generate_javascript()
 			var doctor_search_delay = 200
 			var doctor_edge_menu_item_selected = -1
 			var doctor_edge_menu_items_filtered = []
+			var doctor_edge_menu_open = false
 
 			var doctor_main = document.getElementById("doctor_main")
 			var doctor_bottom_button = document.getElementById("doctor_bottom_button")
@@ -989,48 +1022,64 @@ function generate_javascript()
 
 				doctor_edge_menu_search_input.addEventListener("keyup", function(e)
 				{
-					if(e.key === "Escape")
-					{
-						if(doctor_edge_menu_search_input.value.trim())
-						{
-							doctor_reset_search()
-						}
+					doctor_edge_menu_keyboard_handler(e)
+				})				
 
-						else
-						{
-							doctor_hide_edge_menu()
-						}
-
-						e.preventDefault()
-					}
-
-					else if(e.key === "Enter")
-					{
-						doctor_go_to_selected_menu_item()
-						e.preventDefault()
-					}
-
-					else if(e.key === "ArrowUp")
-					{
-						doctor_menu_item_up()
-						e.preventDefault()
-					}
-
-					else if(e.key === "ArrowDown")
-					{
-						doctor_menu_item_down()
-						e.preventDefault()
-					}
-
-					else
-					{
-						doctor_search_timer()
-					}
+				doctor_edge_menu_search_input.addEventListener("input", function(e)
+				{
+					doctor_edge_menu_keyboard_handler(e)
 				})
 
-				doctor_check_scroll()
+				${keyboard_events}
 
+				doctor_check_scroll()
 				doctor_search(false)
+			}
+
+			function doctor_reset_or_hide_menu()
+			{
+				if(doctor_edge_menu_search_input.value.trim())
+				{
+					doctor_reset_search()
+				}
+
+				else
+				{
+					doctor_hide_edge_menu()
+				}
+			}
+
+			function doctor_edge_menu_keyboard_handler(e)
+			{
+				if(e.key === "Escape")
+				{
+					${menu_keyboard_escape_1}
+					doctor_reset_or_hide_menu()
+					e.preventDefault()
+				}
+
+				else if(e.key === "Enter")
+				{
+					doctor_go_to_selected_menu_item()
+					e.preventDefault()
+				}
+
+				else if(e.key === "ArrowUp")
+				{
+					doctor_menu_item_up()
+					e.preventDefault()
+				}
+
+				else if(e.key === "ArrowDown")
+				{
+					doctor_menu_item_down()
+					e.preventDefault()
+				}
+
+				else
+				{
+					doctor_search_timer()
+				}
 			}
 
 			function doctor_menu_item_up()
@@ -1140,7 +1189,7 @@ function generate_javascript()
 				doctor_edge_menu_items_filtered = lst
 				doctor_edge_menu_clear_selected()
 
-				if(highlight)
+				if(highlight && doctor_edge_menu_items_filtered.length > 0)
 				{
 					doctor_edge_menu_item_selected = 0
 					doctor_edge_menu_items_filtered[doctor_edge_menu_item_selected].classList.add("doctor_edge_menu_item_highlight")
@@ -1326,6 +1375,8 @@ function generate_javascript()
 					doctor_edge_menu_main.style.opacity = 1
 					doctor_edge_menu_search_input.focus()
 				}, 200)
+
+				doctor_edge_menu_open = true
 			}
 
 			function doctor_hide_edge_menu()
@@ -1334,6 +1385,8 @@ function generate_javascript()
 				doctor_edge_menu_main.style.opacity = 0
 				doctor_edge_menu_main.style.visibility = "hidden"
 				doctor_reset_search()
+
+				doctor_edge_menu_open = false
 			}
 
 			function doctor_show_modal(html)

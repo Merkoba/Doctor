@@ -104,7 +104,6 @@
 	It has anchor links to each section.
 	There is a search filter that searches section names as well as their content.
 	There are some keyboard events for searching and going to sections.
-	There are no keyboard events outside this, to allow the user to make their own.
 
 	<img src='https://i.imgur.com/AqO1vgP.jpg' width="400px">
 
@@ -180,6 +179,13 @@
 
 	Any additional declarations you might want to add at the end of &lt;head&gt;.
 	Processing is done to accept unescaped tags.
+
+
+	<code><doc keyboard></code>
+
+	This can be used to enable or disable document keyboard events.
+	They are enabled by default. To disable them set it to false.
+	This doesn't remove the keyboard events for when the left menu is open.
 
 
 	<code><doc section name='Name Of The Section'></code>
