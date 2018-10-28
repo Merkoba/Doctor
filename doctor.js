@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.25"
+const doctor_version = "v1.0.0-rc.26"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -901,7 +901,7 @@ function generate_javascript(options)
 			})
 		`
 
-		menu_keyboard_escape_1 = "return false"
+		menu_keyboard_escape_1 = "e.preventDefault();return false;"
 	}
 
 	var script = `
@@ -1213,17 +1213,21 @@ function generate_javascript(options)
 
 			function doctor_check_scroll()
 			{	
-				var scrollTop = doctor_get_scrollTop()
+				var scrollTop = Math.round(doctor_get_scrollTop())
 
 				if(scrollTop > 0)
 				{
 					doctor_show_top_menu()
 
-					var scrollHeight = doctor_get_scrollHeight()
-					
-					var clientHeight = doctor_get_clientHeight()
+					var scrollHeight = Math.round(doctor_get_scrollHeight())
+					var clientHeight = Math.round(doctor_get_clientHeight())
 
-					if(scrollHeight - scrollTop === clientHeight)
+					let d = scrollHeight - scrollTop
+
+					//This is used to create a range to avoid split pixel miscalculations
+					let diff = 4
+
+					if(d - diff < clientHeight || clientHeight + diff > d)
 					{
 						doctor_bottom_button.style.opacity = 0.5
 						doctor_next_button.style.opacity = 0.5
