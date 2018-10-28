@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0"
+const doctor_version = "v1.0.1"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -897,11 +897,13 @@ function generate_javascript(options)
 					{
 						doctor_reset_or_hide_menu()
 					}
+
+					e.preventDefault()
 				}
 			})
 		`
 
-		menu_keyboard_escape_1 = "e.preventDefault();return false;"
+		menu_keyboard_escape_1 = "return false;"
 	}
 
 	var script = `
