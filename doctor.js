@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.19"
+const doctor_version = "v1.0.0-rc.20"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -400,13 +400,15 @@ function generate_html()
 				transform: translateX(-50%);
 				top: 0;
 				flex-direction: row;
-				display: none;
+				opacity: 0;
 				background-color: white;
 				color: var(--fcolor);
 				border-left: 1px solid grey;
 				border-bottom: 1px solid grey;
 				border-right: 1px solid grey;
 				padding: 10px;
+				display: flex;
+				transition: opacity 500ms;
 			}
 
 			#doctor_prev
@@ -960,6 +962,8 @@ function generate_javascript()
 						doctor_hide_edge_menu()
 					}
 				})
+
+				doctor_check_scroll()
 			}
 
 			function doctor_get_scrollTop()
@@ -1019,12 +1023,14 @@ function generate_javascript()
 
 			function doctor_show_top_menu()
 			{
-				doctor_top_menu.style.display = "flex"
+				doctor_top_menu.style.opacity = "1"
+				doctor_top_menu.style.pointerEvents = "initial"
 			}
 
 			function doctor_hide_top_menu()
 			{
-				doctor_top_menu.style.display = "none"
+				doctor_top_menu.style.opacity = "0"
+				doctor_top_menu.style.pointerEvents = "none"
 			}
 
 			function doctor_go_to_top()
