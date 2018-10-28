@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.21"
+const doctor_version = "v1.0.0-rc.22"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -216,10 +216,12 @@ function generate_html()
 			}
 
 			cnames.push(cname)
+
+			let section_id = `doctor_section_id_${cname}`
 			
-			sections_menu_html += `<a href="#${cname}" class='doctor_section_anchor_link'>${name}</a>`
+			sections_menu_html += `<a href="#${cname}" class='doctor_section_anchor_link' data-section-id='${section_id}'>${name}</a>`
 			
-			edge_sections_menu += `<a class="doctor_edge_menu_item doctor_section_anchor_link" href="#${cname}">${name}</a>`
+			edge_sections_menu += `<a data-section-id='${section_id}' class="doctor_edge_menu_item doctor_section_anchor_link" href="#${cname}">${name}</a>`
 
 			if(i < sections.length)
 			{
@@ -236,7 +238,7 @@ function generate_html()
 			}
 
 			sections_html += `
-			<div class='doctor_section'>
+			<div class='doctor_section' id='${section_id}'>
 
 				<hr class='doctor_section_separator'>
 
@@ -325,26 +327,6 @@ function generate_html()
 				min-height: 100%;
 				cursor: pointer;
 				position: relative;
-			}
-
-			#doctor_left_edge_content_container
-			{
-				position: sticky;
-				top: 0;
-				height: 100vh;
-				width: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-
-			}
-
-			#doctor_left_edge_content
-			{
-				width: 50%;
-				height: 50%;
-				opacity: 0;
-				transition: opacity 300ms ease-in-out;
 			}
 
 			h1, h2
@@ -529,6 +511,22 @@ function generate_html()
 				width: 100%;
 			}
 
+			#doctor_edge_menu_header
+			{
+				padding-bottom: 0.4rem;
+			}
+
+			#doctor_edge_menu_search_input
+			{
+				font-size: 1rem;
+				padding: 0.1rem;
+				width: 14rem;
+				color: var(--tcolor);
+				background-color: white;
+				text-align: center;
+				margin-bottom: 1rem;
+			}
+
 			#doctor_edge_menu_close_container
 			{
 				height: 4rem;
@@ -584,10 +582,9 @@ function generate_html()
 			a.doctor_edge_menu_item:visited, a.doctor_edge_menu_item:link, a.doctor_edge_menu_item:hover
 			{
 				color: var(--wcolor);
-				font-size: 1.2em;
-				text-decoration: none;
-				padding-top: 0.8em;
-				padding-bottom: 0.8em;
+				font-size: 1.2rem;
+				margin-top: 1rem;
+				margin-bottom: 1rem;
 				text-align: center;
 			}
 
@@ -659,6 +656,11 @@ function generate_html()
 				cursor: pointer;
 			}
 
+			.doctor_edge_menu_item_highlight
+			{
+				text-decoration: underline !important;
+			}
+
 		</style>
 
 		<style>
@@ -696,7 +698,8 @@ function generate_html()
 						</div>
 						<div id='doctor_edge_menu_content'>
 							<div id='doctor_edge_menu_content_inner'>
-								<h2 class='doctor_action' onclick="doctor_go_to_top();doctor_hide_edge_menu()">${header}</h2>
+								<h2 id='doctor_edge_menu_header' class='doctor_action' onclick="doctor_go_to_top();doctor_hide_edge_menu()">${header}</h2>
+								<input id='doctor_edge_menu_search_input' type='text' placeholder='Search'>
 								${edge_sections_menu}
 							</div>
 						</div>
@@ -874,16 +877,22 @@ function generate_javascript()
 
 			var doctor_scroll_timer
 			var doctor_check_scroll_delay = 100
+			var doctor_search_delay = 200
+			var doctor_edge_menu_item_selected = -1
+			var doctor_edge_menu_items_filtered = []
 
 			var doctor_main = document.getElementById("doctor_main")
-			var doctor_edge_menu = document.getElementById("doctor_edge_menu")
-			var doctor_edge_menu_main = document.getElementById("doctor_edge_menu_main")
 			var doctor_bottom_button = document.getElementById("doctor_bottom_button")
 			var doctor_next_button = document.getElementById("doctor_next_button")
 			var doctor_top_menu = document.getElementById("doctor_top_menu")
 			var doctor_modal = document.getElementById("doctor_modal")
 			var doctor_modal_inner = document.getElementById("doctor_modal_inner")
 			var doctor_overlay = document.getElementById("doctor_overlay")
+			var doctor_edge_menu = document.getElementById("doctor_edge_menu")
+			var doctor_edge_menu_main = document.getElementById("doctor_edge_menu_main")
+			var doctor_edge_menu_content_inner = document.getElementById("doctor_edge_menu_content_inner")
+			var doctor_edge_menu_search_input = document.getElementById("doctor_edge_menu_search_input")
+			var doctor_edge_menu_items = Array.from(document.querySelectorAll(".doctor_edge_menu_item"))
 
 			window.onload = function()
 			{
@@ -902,6 +911,21 @@ function generate_javascript()
 					}
 				})()
 
+				doctor_search_timer = (function()
+				{
+					var timer
+
+					return function()
+					{
+						clearTimeout(timer)
+
+						timer = setTimeout(function()
+						{
+							doctor_search()
+						}, doctor_search_delay)
+					}
+				})()
+
 				window.addEventListener("scroll", function(e)
 				{
 					doctor_scroll_timer()
@@ -915,7 +939,7 @@ function generate_javascript()
 					})
 				})
 
-				document.getElementById("doctor_main").addEventListener("click", function(e)
+				doctor_main.addEventListener("click", function(e)
 				{
 					var el = e.target
 
@@ -930,7 +954,7 @@ function generate_javascript()
 					{
 						if(el.classList.contains("doctor_section_anchor_link"))
 						{
-							doctor_show_feedback(el.getAttribute("href"))
+							doctor_show_feedback(el.dataset.sectionId)
 						}
 					}
 
@@ -940,7 +964,7 @@ function generate_javascript()
 					}
 				})
 
-				document.getElementById("doctor_edge_menu_content_inner").addEventListener("click", function(e)
+				doctor_edge_menu_content_inner.addEventListener("click", function(e)
 				{
 					var el = e.target
 
@@ -950,12 +974,12 @@ function generate_javascript()
 					{
 						if(el.classList.contains("doctor_section_anchor_link"))
 						{
-							doctor_show_feedback(el.getAttribute("href"))
+							doctor_show_feedback(el.dataset.sectionId)
 						}
 					}
 				})
 
-				document.getElementById("doctor_top_menu").addEventListener("click", function(e)
+				doctor_top_menu.addEventListener("click", function(e)
 				{
 					if(doctor_edge_menu.style.width != 0)
 					{
@@ -963,7 +987,164 @@ function generate_javascript()
 					}
 				})
 
+				doctor_edge_menu_search_input.addEventListener("keyup", function(e)
+				{
+					if(e.key === "Escape")
+					{
+						if(doctor_edge_menu_search_input.value.trim())
+						{
+							doctor_reset_search()
+						}
+
+						else
+						{
+							doctor_hide_edge_menu()
+						}
+
+						e.preventDefault()
+					}
+
+					else if(e.key === "Enter")
+					{
+						doctor_go_to_selected_menu_item()
+						e.preventDefault()
+					}
+
+					else if(e.key === "ArrowUp")
+					{
+						doctor_menu_item_up()
+						e.preventDefault()
+					}
+
+					else if(e.key === "ArrowDown")
+					{
+						doctor_menu_item_down()
+						e.preventDefault()
+					}
+
+					else
+					{
+						doctor_search_timer()
+					}
+				})
+
 				doctor_check_scroll()
+
+				doctor_search(false)
+			}
+
+			function doctor_menu_item_up()
+			{
+				if(doctor_edge_menu_item_selected <= 0)
+				{
+					return false
+				}
+
+				doctor_edge_menu_clear_selected()
+
+				let i = doctor_edge_menu_items_filtered.length - 1
+
+				for(let item of doctor_edge_menu_items_filtered.slice().reverse())
+				{
+					if(i < doctor_edge_menu_item_selected)
+					{
+						item.classList.add("doctor_edge_menu_item_highlight")
+						doctor_edge_menu_item_selected = i
+						return
+					}
+
+					i -= 1
+				}
+			}
+
+			function doctor_menu_item_down()
+			{
+				if(doctor_edge_menu_item_selected >= doctor_edge_menu_items_filtered.length - 1)
+				{
+					return false
+				}
+
+				doctor_edge_menu_clear_selected()
+
+				let i = 0
+
+				for(let item of doctor_edge_menu_items_filtered)
+				{
+					if(i > doctor_edge_menu_item_selected)
+					{
+						item.classList.add("doctor_edge_menu_item_highlight")
+						doctor_edge_menu_item_selected = i
+						return
+					}
+
+					i += 1
+				}
+			}
+
+			function doctor_edge_menu_clear_selected()
+			{
+				for(let item of doctor_edge_menu_items_filtered)
+				{
+					item.classList.remove("doctor_edge_menu_item_highlight")
+				}
+			}
+
+			function doctor_go_to_selected_menu_item()
+			{
+				if(doctor_edge_menu_item_selected < 0)
+				{
+					return false
+				}
+
+				let item = doctor_edge_menu_items_filtered[doctor_edge_menu_item_selected]
+				let section_id = item.dataset.sectionId
+				let section = document.getElementById(section_id)
+				let anchor = section.querySelector(".doctor_section_anchor")
+				doctor_scroll_to_element(anchor)
+				doctor_show_feedback(section_id)
+				doctor_hide_edge_menu()
+			}
+
+			function doctor_reset_search()
+			{
+				doctor_edge_menu_search_input.value = ""
+				doctor_search(false)
+				doctor_edge_menu_item_selected = -1
+			}
+
+			function doctor_search(highlight=true)
+			{
+				var lst = []
+
+				var input = doctor_edge_menu_search_input.value.toLowerCase().trim()
+
+				for(let item of doctor_edge_menu_items)
+				{
+					let section = document.getElementById(item.dataset.sectionId)
+
+					let text = item.innerText.toLowerCase().trim()
+					let text2 = section.innerText.toLowerCase().trim()
+
+					if(text.includes(input) || text2.includes(input))
+					{
+						item.style.display = "initial"
+						lst.push(item)
+					}
+
+					else
+					{
+						item.style.display = "none"
+					}
+				}
+
+				doctor_edge_menu_items_filtered = lst
+				doctor_edge_menu_clear_selected()
+
+				if(highlight)
+				{
+					doctor_edge_menu_item_selected = 0
+					doctor_edge_menu_items_filtered[doctor_edge_menu_item_selected].classList.add("doctor_edge_menu_item_highlight")
+				}
 			}
 
 			function doctor_get_scrollTop()
@@ -1120,9 +1301,14 @@ function generate_javascript()
 
 					else
 					{
-						window.scrollTo(0, max)
+						doctor_scroll_to_element(el)
 					}
 				}
+			}
+
+			function doctor_scroll_to_element(el)
+			{
+				window.scrollTo(0, el.offsetTop)
 			}
 
 			function doctor_left_edge_click()
@@ -1138,6 +1324,7 @@ function generate_javascript()
 				{
 					doctor_edge_menu_main.style.visibility = "visible"
 					doctor_edge_menu_main.style.opacity = 1
+					doctor_edge_menu_search_input.focus()
 				}, 200)
 			}
 
@@ -1146,6 +1333,7 @@ function generate_javascript()
 				doctor_edge_menu.style.width = 0
 				doctor_edge_menu_main.style.opacity = 0
 				doctor_edge_menu_main.style.visibility = "hidden"
+				doctor_reset_search()
 			}
 
 			function doctor_show_modal(html)
@@ -1161,49 +1349,35 @@ function generate_javascript()
 				doctor_overlay.style.display = "none"
 			}
 
-			function doctor_show_feedback(name)
+			function doctor_show_feedback(id)
 			{
-				if(name.startsWith('#'))
-				{
-					name = name.slice(1)
-				}
+				let section = document.getElementById(id)
 
-				var anchors = Array.from(document.querySelectorAll(".doctor_section_anchor"))
+				let feedback = section.querySelector(".doctor_section_feedback")
 
-				for(let anchor of anchors)
+				let n = 0
+
+				let interval = setInterval(function()
 				{
-					if(anchor.name === name)
+					if(n % 2 === 0)
 					{
-						let section = anchor.closest(".doctor_section")
-						let feedback = section.querySelector(".doctor_section_feedback")
-
-						let n = 0
-
-						let interval = setInterval(function()
-						{
-							if(n % 2 === 0)
-							{
-								feedback.style.visibility = "visible"
-							}
-
-							else
-							{
-								feedback.style.visibility = "hidden"
-							}
-
-							n += 1
-
-							// This should be an odd number
-							if(n > 25)
-							{
-								clearInterval(interval)
-								feedback.style.visibility = "hidden"
-							}
-						}, 100)
-
-						return
+						feedback.style.visibility = "visible"
 					}
-				}
+
+					else
+					{
+						feedback.style.visibility = "hidden"
+					}
+
+					n += 1
+
+					// This should be an odd number
+					if(n > 25)
+					{
+						clearInterval(interval)
+						feedback.style.visibility = "hidden"
+					}
+				}, 100)
 			}
 
 		</script>
