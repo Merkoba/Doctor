@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.0-rc.20"
+const doctor_version = "v1.0.0-rc.21"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -411,30 +411,30 @@ function generate_html()
 				transition: opacity 500ms;
 			}
 
-			#doctor_prev
+			#doctor_prev_button
 			{
 				border-right: 1px solid grey;
 				padding-right: 1rem;
 				cursor: pointer;
 			}
 
-			#doctor_next
+			#doctor_next_button
 			{
 				border-left: 1px solid grey;
 				padding-left: 1rem;
 				cursor: pointer;
 			}
 
-			#doctor_jumper
+			#doctor_top_button
 			{
-				border-right: 1px solid grey;
 				padding-left: 1rem;
 				padding-right: 1rem;
 				cursor: pointer;
 			}
 
-			#doctor_jumper_bottom
+			#doctor_bottom_button
 			{
+				border-left: 1px solid grey;
 				padding-left: 1rem;
 				padding-right: 1rem;
 				cursor: pointer;
@@ -674,10 +674,10 @@ function generate_html()
 		<div id='doctor_rows'>
 
 			<div id='doctor_top_menu' class='doctor_unselectable'>
-				<div id='doctor_prev' class='doctor_action' onclick='doctor_go_to_anchor()'>Prev</div>
-				<div id='doctor_jumper' class='doctor_action' onclick='doctor_go_to_top()'>Top</div>
-				<div id='doctor_jumper_bottom' class='doctor_action' onclick='doctor_go_to_bottom()'>Bottom</div>
-				<div id='doctor_next' class='doctor_action' onclick='doctor_go_to_anchor(false)'>Next</div>
+				<div id='doctor_prev_button' class='doctor_action' onclick='doctor_go_to_anchor()'>Prev</div>
+				<div id='doctor_top_button' class='doctor_action' onclick='doctor_go_to_top()'>Top</div>
+				<div id='doctor_bottom_button' class='doctor_action' onclick='doctor_go_to_bottom()'>Bottom</div>
+				<div id='doctor_next_button' class='doctor_action' onclick='doctor_go_to_anchor(false)'>Next</div>
 			</div>
 
 			<div id='doctor_left_edge' onclick='doctor_left_edge_click()'></div>
@@ -878,8 +878,8 @@ function generate_javascript()
 			var doctor_main = document.getElementById("doctor_main")
 			var doctor_edge_menu = document.getElementById("doctor_edge_menu")
 			var doctor_edge_menu_main = document.getElementById("doctor_edge_menu_main")
-			var doctor_jumper_bottom = document.getElementById("doctor_jumper_bottom")
-			var doctor_next = document.getElementById("doctor_next")
+			var doctor_bottom_button = document.getElementById("doctor_bottom_button")
+			var doctor_next_button = document.getElementById("doctor_next_button")
 			var doctor_top_menu = document.getElementById("doctor_top_menu")
 			var doctor_modal = document.getElementById("doctor_modal")
 			var doctor_modal_inner = document.getElementById("doctor_modal_inner")
@@ -995,22 +995,22 @@ function generate_javascript()
 
 					if(scrollHeight - scrollTop === clientHeight)
 					{
-						doctor_jumper_bottom.style.opacity = 0.5
-						doctor_next.style.opacity = 0.5
+						doctor_bottom_button.style.opacity = 0.5
+						doctor_next_button.style.opacity = 0.5
 					}
 
 					else
 					{
-						doctor_jumper_bottom.style.opacity = 1
+						doctor_bottom_button.style.opacity = 1
 
 						if(doctor_go_to_anchor(false, true))
 						{
-							doctor_next.style.opacity = 1
+							doctor_next_button.style.opacity = 1
 						}
 
 						else
 						{
-							doctor_next.style.opacity = 0.5
+							doctor_next_button.style.opacity = 0.5
 						}
 					}
 				}
@@ -1045,8 +1045,8 @@ function generate_javascript()
 
 			function doctor_go_to_bottom()
 			{
-				doctor_jumper_bottom.style.opacity = 0.5
-				doctor_next.style.opacity = 0.5
+				doctor_bottom_button.style.opacity = 0.5
+				doctor_next_button.style.opacity = 0.5
 
 				window.scrollTo({
 					top: doctor_main.clientHeight,
