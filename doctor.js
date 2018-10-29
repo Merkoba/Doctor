@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.0.1"
+const doctor_version = "v1.1.0"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -55,9 +55,9 @@ function get_elements(fcontent)
 
 	var elements_ok = true
 
-	$("code").each(function()
+	$("xcodex").each(function()
 	{
-		if($(this).parents("code").length > 0)
+		if($(this).parents("xcodex").length > 0)
 		{	
 			return true
 		}
@@ -66,7 +66,7 @@ function get_elements(fcontent)
 
 		let h = dummy_space(fix_code_sample($(this).html()))
 
-		let ns = `<i><blockquote class='doctor_code_sample'><pre><code>${h}</code></pre></blockquote></i>`
+		let ns = `<blockquote class='doctor_code_sample'><pre><code>${h}</code></pre></blockquote>`
 		
 		$(this).replaceWith(ns)
 	})
@@ -101,7 +101,7 @@ function get_elements(fcontent)
 
 		if(!type || !content)
 		{
-			print_error("Error parsing the document.")
+			print_error(`Error parsing the document in: ${type || content.substring(0, 100)}`)
 			elements_ok = false
 			return false
 		}
@@ -278,16 +278,230 @@ function generate_html()
 	<html>
 
 	<head>
+
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 		<title>${title}</title>
 		<link rel='shortcut icon' href='${favicon}' type='image/x-icon'>
+
+		${generate_css({theme:theme})}
+
 		<style>
+			${style}
+		</style>
+
+		${head}
+
+	</head>
+
+	<body>
+
+		<div id='doctor_rows'>
+
+			<div id='doctor_top_menu' class='doctor_unselectable'>
+				<div id='doctor_prev_button' class='doctor_action' onclick='doctor_go_to_anchor()'>Prev</div>
+				<div id='doctor_top_button' class='doctor_action' onclick='doctor_go_to_top()'>Top</div>
+				<div id='doctor_bottom_button' class='doctor_action' onclick='doctor_go_to_bottom()'>Bottom</div>
+				<div id='doctor_next_button' class='doctor_action' onclick='doctor_go_to_anchor(false)'>Next</div>
+			</div>
+
+			<div id='doctor_left_edge' onclick='doctor_left_edge_click()'></div>
+
+			<div id='doctor_overlay' onclick='doctor_hide_modal()'></div>
+
+			<div id='doctor_modal' onclick='doctor_hide_modal()'>
+				<div id='doctor_modal_inner'></div>
+			</div>
+
+			<div id='doctor_edge_menu'>
+				<div id='doctor_edge_menu_main' class='doctor_unselectable'>
+					<div id='doctor_edge_menu_columns'>
+						<div id='doctor_edge_menu_close_container'>
+							<div id='doctor_edge_menu_close' class='doctor_action' onclick='doctor_hide_edge_menu()'>Close</div>
+						</div>
+						<div id='doctor_edge_menu_content'>
+							<div id='doctor_edge_menu_content_inner'>
+								<h2 id='doctor_edge_menu_header' class='doctor_action' onclick="doctor_go_to_top();doctor_hide_edge_menu()">${header}</h2>
+								<input id='doctor_edge_menu_search_input' type='text' placeholder='Search'>
+								${edge_sections_menu}
+							</div>
+						</div>
+						<div id='doctor_about_container'>
+							<a id='doctor_about' target='_blank' href='${doctor_site_url}'>Doctor ${doctor_version}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id='doctor_main'>
+				<h1>${header}</h1>
+				<div>${description}</div>
+				<br>
+				<div>
+					<div class='doctor_sections_menu'>
+						${sections_menu_html}
+					</div>
+				</div>
+				<div>
+					${sections_html}
+				</div>
+				<br><br><br><br>
+			</div>
+
+		</div>
+
+		${generate_javascript({keyboard:keyboard})}
+
+		<script>${script}</script>
+
+	</body>
+
+	</html>
+	`
+
+	return s
+}
+
+function create_file(html)
+{
+	var file_name
+
+	if(output_path)
+	{
+		file_name = output_path
+	}
+
+	else
+	{
+		file_name = `${path.dirname(file_path)}/index.html`
+	}
+
+	var stream = fs.createWriteStream(file_name)
+
+	stream.once('open', function(fd)
+	{
+		stream.end(html)
+	})
+
+	print_success(`Output filed saved in: ${file_name}`)
+}
+
+function replace_linebreaks(s)
+{
+	return s.replace(/\n/g, "<br>")
+}
+
+function clean_string(s)
+{
+	return s.replace(/\s+/g, '').trim()
+}
+
+function clean_string2(s)
+{
+	return s.replace(/\s+/g, ' ').trim()
+}
+
+function dummy_space(s, add=true)
+{
+	if(add)
+	{
+		return s.replace(/\n/g, "[x[docnewline]x]").replace(/\s/g, "[x[docspace]x]")
+	}
+
+	else
+	{
+		return s.replace(/\[x\[docnewline\]x\]/g, "\n").replace(/\[x\[docspace\]x\]/g, " ")
+	}
+}
+
+function dummy_space2(s, add=true)
+{
+	if(add)
+	{
+		return s.replace(/\n/g, "[x[docnewline]x]").replace(/ /g, "[x[docspace]x]").replace(/\t/g, "[x[doctab]x]")
+	}
+
+	else
+	{
+		return s.replace(/\[x\[docnewline\]x\]/g, "\n").replace(/\[x\[docspace\]x\]/g, " ").replace(/\[x\[doctab\]x\]/g, "\t")
+	}
+}
+
+function fix_code_sample(s)
+{
+	s = s.replace(/\t/g, "    ")
+
+	let lines = s.split("\n")
+
+	let min
+
+	let ns = []
+
+	for(let line of lines)
+	{
+		let line2 = line.replace(/^\s*$/, "[x[docempty]x]")
+
+		if(line.trim())
+		{
+			let i = line.search(/\S/)
+
+			if(min === undefined)
+			{
+				min = i
+			}
+
+			else
+			{
+				if(i < min)
+				{
+					min = i
+				}
+			}
+
+		}
+		
+		ns.push(line2)
+	}
+
+	s = ns.join("\n")
+
+	if(min > 0)
+	{
+		lines = s.split("\n")
+
+		ns = []
+
+		let ts = ""
+
+		for(let i=0; i<min; i++)
+		{
+			ts += " "
+		}
+
+		var rep = new RegExp(`^${ts}`, "g")
+
+		for(let line of lines)
+		{
+			line = line.replace(rep, "")
+			ns.push(line)
+		}
+
+		s = ns.join("\n")
+	}
+
+	s = s.replace(/\[x\[docempty\]x\]/g, "").trim()
+
+	return s
+}
+
+function generate_css(options)
+{
+	var style = `
+	<style>
 
 			:root 
 			{
 				--fcolor: rgba(0, 0, 0, 0.9);
 				--wcolor: rgba(255, 255, 255, 0.9);
-				--tcolor: ${theme};
+				--tcolor: ${options.theme};
 			}
 
 			body, html
@@ -438,12 +652,22 @@ function generate_html()
 				user-select: none;
 			}
 
-			blockquote, pre
+			.doctor_code_sample
+			{
+				margin: 0;
+			} 
+
+			.doctor_code_sample pre
 			{
 				margin: 0;
 			}
 
-			blockquote
+			.doctor_code_sample code
+			{
+				font-style: italic;
+			}
+
+			.doctor_code_sample
 			{
 				display: inline-block;
 				background-color: #f5f5f5;
@@ -668,212 +892,9 @@ function generate_html()
 			}
 
 		</style>
-
-		<style>
-			${style}
-		</style>
-
-		${head}
-
-	</head>
-
-	<body>
-
-		<div id='doctor_rows'>
-
-			<div id='doctor_top_menu' class='doctor_unselectable'>
-				<div id='doctor_prev_button' class='doctor_action' onclick='doctor_go_to_anchor()'>Prev</div>
-				<div id='doctor_top_button' class='doctor_action' onclick='doctor_go_to_top()'>Top</div>
-				<div id='doctor_bottom_button' class='doctor_action' onclick='doctor_go_to_bottom()'>Bottom</div>
-				<div id='doctor_next_button' class='doctor_action' onclick='doctor_go_to_anchor(false)'>Next</div>
-			</div>
-
-			<div id='doctor_left_edge' onclick='doctor_left_edge_click()'></div>
-
-			<div id='doctor_overlay' onclick='doctor_hide_modal()'></div>
-
-			<div id='doctor_modal' onclick='doctor_hide_modal()'>
-				<div id='doctor_modal_inner'></div>
-			</div>
-
-			<div id='doctor_edge_menu'>
-				<div id='doctor_edge_menu_main' class='doctor_unselectable'>
-					<div id='doctor_edge_menu_columns'>
-						<div id='doctor_edge_menu_close_container'>
-							<div id='doctor_edge_menu_close' class='doctor_action' onclick='doctor_hide_edge_menu()'>Close</div>
-						</div>
-						<div id='doctor_edge_menu_content'>
-							<div id='doctor_edge_menu_content_inner'>
-								<h2 id='doctor_edge_menu_header' class='doctor_action' onclick="doctor_go_to_top();doctor_hide_edge_menu()">${header}</h2>
-								<input id='doctor_edge_menu_search_input' type='text' placeholder='Search'>
-								${edge_sections_menu}
-							</div>
-						</div>
-						<div id='doctor_about_container'>
-							<a id='doctor_about' target='_blank' href='${doctor_site_url}'>Doctor ${doctor_version}</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id='doctor_main'>
-				<h1>${header}</h1>
-				<div>${description}</div>
-				<br>
-				<div>
-					<div class='doctor_sections_menu'>
-						${sections_menu_html}
-					</div>
-				</div>
-				<div>
-					${sections_html}
-				</div>
-				<br><br><br><br>
-			</div>
-
-		</div>
-
-		${generate_javascript({keyboard:keyboard})}
-
-		<script>${script}</script>
-
-	</body>
-
-	</html>
 	`
 
-	return s
-}
-
-function create_file(html)
-{
-	var file_name
-
-	if(output_path)
-	{
-		file_name = output_path
-	}
-
-	else
-	{
-		file_name = `${path.dirname(file_path)}/index.html`
-	}
-
-	var stream = fs.createWriteStream(file_name)
-
-	stream.once('open', function(fd)
-	{
-		stream.end(html)
-	})
-
-	print_success(`Output filed saved in: ${file_name}`)
-}
-
-function replace_linebreaks(s)
-{
-	return s.replace(/\n/g, "<br>")
-}
-
-function clean_string(s)
-{
-	return s.replace(/\s+/g, '').trim()
-}
-
-function clean_string2(s)
-{
-	return s.replace(/\s+/g, ' ').trim()
-}
-
-function dummy_space(s, add=true)
-{
-	if(add)
-	{
-		return s.replace(/\n/g, "[x[docnewline]x]").replace(/\s/g, "[x[docspace]x]")
-	}
-
-	else
-	{
-		return s.replace(/\[x\[docnewline\]x\]/g, "\n").replace(/\[x\[docspace\]x\]/g, " ")
-	}
-}
-
-function dummy_space2(s, add=true)
-{
-	if(add)
-	{
-		return s.replace(/\n/g, "[x[docnewline]x]").replace(/ /g, "[x[docspace]x]").replace(/\t/g, "[x[doctab]x]")
-	}
-
-	else
-	{
-		return s.replace(/\[x\[docnewline\]x\]/g, "\n").replace(/\[x\[docspace\]x\]/g, " ").replace(/\[x\[doctab\]x\]/g, "\t")
-	}
-}
-
-function fix_code_sample(s)
-{
-	s = s.replace(/\t/g, "    ")
-
-	let lines = s.split("\n")
-
-	let min
-
-	let ns = []
-
-	for(let line of lines)
-	{
-		let line2 = line.replace(/^\s*$/, "[x[docempty]x]")
-
-		if(line.trim())
-		{
-			let i = line.search(/\S/)
-
-			if(min === undefined)
-			{
-				min = i
-			}
-
-			else
-			{
-				if(i < min)
-				{
-					min = i
-				}
-			}
-
-		}
-		
-		ns.push(line2)
-	}
-
-	s = ns.join("\n")
-
-	if(min > 0)
-	{
-		lines = s.split("\n")
-
-		ns = []
-
-		let ts = ""
-
-		for(let i=0; i<min; i++)
-		{
-			ts += " "
-		}
-
-		var rep = new RegExp(`^${ts}`, "g")
-
-		for(let line of lines)
-		{
-			line = line.replace(rep, "")
-			ns.push(line)
-		}
-
-		s = ns.join("\n")
-	}
-
-	s = s.replace(/\[x\[docempty\]x\]/g, "").trim()
-
-	return s
+	return style
 }
 
 function generate_javascript(options)
@@ -1562,7 +1583,7 @@ function show_duration()
 
 function do_safe_parses(fc)
 {
-	fc = safe_parse_file_content(fc, "code", "code")
+	fc = safe_parse_file_content(fc, "xcodex", "xcodex")
 	fc = safe_parse_file_content(fc, "doc head", "doc")
 
 	return fc

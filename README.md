@@ -15,3 +15,13 @@ This is meant to be a simple one-page documentation generator, yet aiming to aid
 This is not a tool to automatically generate documentation from source code.
 
 [Demo and Documentation](https://madprops.github.io/Doctor/)
+
+# Changelog
+
+>v1.1.0: 
+
+<code> is now <xcodex> to allow problems when using <code>, which is a standard tag, inside a code sample.
+
+Parsing errors should be more verbose now.
+
+Encapsulated CSS creation in its own function.

@@ -17,11 +17,11 @@
 
 	To generate the single HTML file output, the source file is passed to doctormake: 
 
-	<code>doctormake input.xml output.html</code>
+	<xcodex>doctormake input.xml output.html</xcodex>
 
 	Or manually:
 
-	<code>node doctor.js input.xml output.html</code>
+	<xcodex>node doctor.js input.xml output.html</xcodex>
 	
 	This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible in the work required to create documentation that fits the scope, in a quick painless manner.
 
@@ -41,7 +41,7 @@
 
 	For example, this is how a simple input file might look like:
 	
-	<code>
+	<xcodex>
 		<doc header>My Project</doc>
 
 		<doc description>The introduction to my project</doc>
@@ -56,7 +56,7 @@
 
 			I can use code samples:
 
-			<code>
+			<xcodex>
 
 				var s = "This is a code sample"
 				
@@ -67,7 +67,7 @@
 
 				<div>This is HTML</div>
 
-			</code>
+			</xcodex>
 
 		</doc>
 
@@ -80,9 +80,9 @@
 			Every section creates an anchor link at the top and in the left menu.
 
 		</doc>
-	</code>
+	</xcodex>
 
-	Then that file is sent to doctormake: <code>doctormake /path/to/input/file /path/to/output/file</code>
+	Then that file is sent to doctormake: <xcodex>doctormake /path/to/input/file /path/to/output/file</xcodex>
 
 	The input file path is required, however the output path is not. 
 
@@ -138,57 +138,57 @@
 	The &lt;doc&gt; tag, which is used by Doctor to build the documentation, has several types available. They all end in &lt;/doc&gt;.
 
 
-	<code><doc title></code>
+	<xcodex><doc title></xcodex>
 
 	This is used to change the &lt;title&gt; of the document in &lt;head&gt;.
 
 
-	<code><doc header></code>
+	<xcodex><doc header></xcodex>
 
 	This is used to change the header of the documentation, the name of the project, at the very top.
 
 
-	<code><doc description></code>
+	<xcodex><doc description></xcodex>
 
 	The description of the project, which is shown right below the header.
 
 
-	<code><doc theme></code>
+	<xcodex><doc theme></xcodex>
 
 	The documentation's color theme can be configured.
 	The color specified here changes the color of the left menu, as well as the color of the links.
 	A light color is not recommended because it will not contrast well with the white background.
 
 
-	<code><doc style></code>
+	<xcodex><doc style></xcodex>
 
 	Additional CSS you might want to add can go here. This is added after the default CSS declarations, at the bottom of &lt;head&gt;.
 
 
-	<code><doc script></code>
+	<xcodex><doc script></xcodex>
 
 	Additional JavaScript you might want to add can go here. This is added after the default JavaScript declarations, at the bottom of &lt;body&gt;.
 
 
-	<code><doc favicon></code>
+	<xcodex><doc favicon></xcodex>
 
 	Path to a desired favicon. If nothing is provided it will use a default one, which is hardcoded in the output file.
 
 
-	<code><doc head></code>
+	<xcodex><doc head></xcodex>
 
 	Any additional declarations you might want to add at the end of &lt;head&gt;.
 	Processing is done to accept unescaped tags.
 
 
-	<code><doc keyboard></code>
+	<xcodex><doc keyboard></xcodex>
 
 	This can be used to enable or disable document keyboard events.
 	They are enabled by default. To disable them set it to false.
 	This doesn't remove the keyboard events for when the left menu is open.
 
 
-	<code><doc section name='Name Of The Section'></code>
+	<xcodex><doc section name='Name Of The Section'></xcodex>
 
 	This is where the actual content of the documentation goes.
 	The name of the section appears on top, with its content below.
@@ -200,24 +200,27 @@
 	<b>Special Tags</b>
 
 
-	<code><code></code></code>
+	<xcodex><xcodex> </xcodex></xcodex>
 
 	This allows for code samples to be displayed.
 	Processing is done to ensure everything is displayed correctly.
+	It will try to autoescape tags inside &lt;xcodex&gt; as much as possible.
+	But some cases require manual escape, like unclosed &lt;xcodex&gt; tags.
+	Which shouldn't be a problem since &lt;xcodex&gt; is not a common tag.
 </doc>
 
 <doc section name='Installation'>
 	Doctor's NPM package is called doctormake.
 
-	To use it as a command line tool do: <code>npm install -g doctormake</code>
+	To use it as a command line tool do: <xcodex>npm install -g doctormake</xcodex>
 
-	And then to use it: <code>doctormake input output</code>
+	And then to use it: <xcodex>doctormake input output</xcodex>
 
 	To run it manually download a copy from <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a>.
 
-	Run <code>npm install</code> in the directory.
+	Run <xcodex>npm install</xcodex> in the directory.
 
-	And then to use it: <code>node doctor.js input output</code>
+	And then to use it: <xcodex>node doctor.js input output</xcodex>
 </doc>
 
 <doc section name='Feedback'>
