@@ -20,7 +20,7 @@ This is not a tool to automatically generate documentation from source code.
 
 >v1.1.0: 
 
-<code> is now <xcodex> to allow problems when using <code>, which is a standard tag, inside a code sample.
+&lt;code&gt; is now &lt;xcodex&gt; to allow problems when using &lt;code&gt;, which is a standard tag, inside a code sample.
 
 Parsing errors should be more verbose now.
 
