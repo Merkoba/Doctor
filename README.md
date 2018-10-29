@@ -18,9 +18,11 @@ This is not a tool to automatically generate documentation from source code.
 
 # Changelog
 
->v1.1.0: 
+>v1.1.1: 
 
-&lt;code&gt; is now &lt;xcodex&gt; to allow problems when using &lt;code&gt;, which is a standard tag, inside a code sample.
+&lt;code&gt; is now &lt;xcodex&gt; to avoid problems when using &lt;code&gt;, which is a standard tag, inside a code sample.
+
+Changed the code sample style.
 
 Parsing errors should be more verbose now.
 

@@ -1,6 +1,6 @@
 {
 	"name": "doctormake",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"main": "doctor.js",
 	"scripts": {
 		"test": "echo \"Error: No test specified\" && exit 1"
@@ -8,7 +8,8 @@
 	"keywords": [
 		"documentation",
 		"generator",
-		"formatter"
+		"formatter",
+		"template"
 	],
 	"author": "madprops <mfmadprops@gmail.com>",
 	"license": "Apache 2.0",
