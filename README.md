@@ -22,6 +22,15 @@ This is not a tool to automatically generate documentation from source code.
 
 # Changelog
 
+>v1.3.0
+
+Separated Javascript and CSS generators into their own files.
+
+Added &lt;doc footer&gt; which allows a footer to be shown at the bottom.
+
+Other code refactoring.
+
+
 >v1.2.3
 
 Added &lt;doc modal&gt; option to enable or disable image modals.

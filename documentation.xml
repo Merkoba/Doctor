@@ -2,6 +2,8 @@
 
 <doc header>Doctor</doc>
 
+<doc footer>Thanks For Reading!</doc>
+
 <doc description>
 	A tool to generate documentation quickly
 
@@ -178,6 +180,14 @@
 	<xcodex><doc head></xcodex>
 
 	Any additional declarations you might want to add at the end of &lt;head&gt;.
+	Processing is done to accept unescaped tags.
+
+
+	<xcodex><doc footer></xcodex>
+
+	This is used to change the footer at the bottom of the documentation.
+	The footer's background color is the same as the theme color, with a white font.
+	If nothing is specified, the footer will not be rendered at all.
 	Processing is done to accept unescaped tags.
 
 
