@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.2.1"
+const doctor_version = "v1.2.2"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()

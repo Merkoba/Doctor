@@ -1,6 +1,6 @@
-This tool allows you to build documentation for your project through XML syntax. 
+Doctor allows you to build documentation for your project through XML syntax. 
 
-It can be configured through some settings and different sections of the documentation can be created, which are fully HTML compatible.
+It can be configured through some settings, and different sections of the documentation can be created, which are fully HTML compatible.
 
 To install:
 
@@ -14,7 +14,7 @@ Or manually:
 
 >node doctor.js input.xml output.html
 
-This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible on the work required to create documentations that fit the scope, in a quick painless manner.
+This is meant to be a simple one-page documentation generator, yet aiming to aid as much as possible on the work required to create documentation that fits the scope, in a quick painless manner.
 
 This is not a tool to automatically generate documentation from source code.
 
@@ -22,9 +22,11 @@ This is not a tool to automatically generate documentation from source code.
 
 # Changelog
 
->v1.2.0
+>v1.2.2
 
 Added &lt;doc modal&gt; option to enable or disable image modals.
+
+Fixes in documentation.
 
 
 >v1.1.1
