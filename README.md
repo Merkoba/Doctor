@@ -22,6 +22,13 @@ This is not a tool to automatically generate documentation from source code.
 
 # Changelog
 
+>v1.3.1
+
+CSS fix on left menu.
+
+Version and homepage is now read from package.json
+
+
 >v1.3.0
 
 Separated Javascript and CSS generators into their own files.

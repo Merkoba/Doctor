@@ -255,7 +255,7 @@ module.exports.generate = function(options)
 				top: 0;
 				left: -30rem;
 				width: 30rem;
-				height: 100vh;
+				height: 100%;
 				background-color: var(--tcolor);
 				transition: left 300ms ease-in-out;
 				z-index: 999;

@@ -1,7 +1,9 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.3.0"
-const doctor_site_url = "https://madprops.github.io/Doctor/"
+const pkg = require("./package.json")
+
+const doctor_version = pkg.version
+const doctor_site_url = pkg.homepage
 
 const DoctorJavascript = require("./DoctorJavascript")
 const DoctorCSS = require("./DoctorCSS")
