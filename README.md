@@ -2,6 +2,10 @@ This tool allows you to build documentation for your project through XML syntax.
 
 It can be configured through some settings and different sections of the documentation can be created, which are fully HTML compatible.
 
+To install:
+
+>npm install doctormake
+
 To generate the single HTML file output, the source file is passed to doctormake (NPM package):
 
 >doctormake input.xml output.xml
@@ -17,6 +21,11 @@ This is not a tool to automatically generate documentation from source code.
 [Demo and Documentation](https://madprops.github.io/Doctor/)
 
 # Changelog
+
+>v1.2.0
+
+Added &lt;doc modal&gt; option to enable or disable image modals.
+
 
 >v1.1.1: 
 

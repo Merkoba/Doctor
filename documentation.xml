@@ -188,6 +188,13 @@
 	This doesn't remove the keyboard events for when the left menu is open.
 
 
+	<xcodex><doc modal></xcodex>
+
+	This can be used to enable or disable image modals.
+	By default clicked images are opened in a modal window.
+	To disable that set it to false.
+
+
 	<xcodex><doc section name='Name Of The Section'></xcodex>
 
 	This is where the actual content of the documentation goes.

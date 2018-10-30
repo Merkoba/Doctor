@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const doctor_version = "v1.1.1"
+const doctor_version = "v1.2.0"
 const doctor_site_url = "https://madprops.github.io/Doctor/"
 
 const time_start = Date.now()
@@ -127,6 +127,7 @@ function generate_html()
 	var edge_sections_menu = ""
 	var favicon = ""
 	var keyboard = true
+	var modal = true
 
 	for(let obj of objects)
 	{
@@ -178,6 +179,11 @@ function generate_html()
 		else if(obj.type === "keyboard")
 		{
 			keyboard = JSON.parse(obj.content)
+		}
+
+		else if(obj.type === "modal")
+		{
+			modal = JSON.parse(obj.content)
 		}
 	}
 
@@ -283,7 +289,7 @@ function generate_html()
 		<title>${title}</title>
 		<link rel='shortcut icon' href='${favicon}' type='image/x-icon'>
 
-		${generate_css({theme:theme})}
+		${generate_css({theme:theme, modal:modal})}
 
 		<style>
 			${style}
@@ -348,7 +354,7 @@ function generate_html()
 
 		</div>
 
-		${generate_javascript({keyboard:keyboard})}
+		${generate_javascript({keyboard:keyboard, modal:modal})}
 
 		<script>${script}</script>
 
@@ -494,6 +500,13 @@ function fix_code_sample(s)
 
 function generate_css(options)
 {
+	var image_cursor = "cursor: pointer;"
+
+	if(!options.modal)
+	{
+		image_cursor = ""
+	}
+
 	var style = `
 	<style>
 
@@ -883,7 +896,7 @@ function generate_css(options)
 
 		 	#doctor_main img
 			{
-				cursor: pointer;
+				${image_cursor}
 			}
 
 			.doctor_edge_menu_item_highlight
@@ -901,6 +914,7 @@ function generate_javascript(options)
 {
 	var keyboard_events = ""
 	var menu_keyboard_escape_1 = ""
+	var on_image_click = ""
 
 	if(options.keyboard)
 	{
@@ -925,6 +939,16 @@ function generate_javascript(options)
 		`
 
 		menu_keyboard_escape_1 = "return false;"
+	}
+
+	if(options.modal)
+	{
+		on_image_click = `
+			else if(tag === "img")
+			{
+				doctor_show_modal("<img src='" + el.src + "'>")
+			}
+		`
 	}
 
 	var script = `
@@ -1001,18 +1025,15 @@ function generate_javascript(options)
 
 					var tag = el.tagName.toLowerCase()
 
-					if(tag === "img")
-					{
-						doctor_show_modal("<img src='" + el.src + "'>")
-					}
-
-					else if(tag === "a")
+					if(tag === "a")
 					{
 						if(el.classList.contains("doctor_section_anchor_link"))
 						{
 							doctor_show_feedback(el.dataset.sectionId)
 						}
 					}
+
+					${on_image_click}
 
 					if(doctor_edge_menu_open)
 					{
