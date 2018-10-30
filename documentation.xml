@@ -15,7 +15,7 @@
 	
 	It can be configured through some settings, and different sections of the documentation can be created, which are fully HTML compatible.
 
-	To generate the single HTML file output, the source file is passed to doctormake: 
+	To generate the single HTML file output, the source file is passed to doctormake (NPM package):
 
 	<xcodex>doctormake input.xml output.html</xcodex>
 
