@@ -8,7 +8,7 @@ To install:
 
 To generate the single HTML file output, the source file is passed to doctormake (NPM package):
 
->doctormake input.xml output.xml
+>doctormake input.xml output.html
 
 Or manually:
 
