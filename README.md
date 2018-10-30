@@ -4,7 +4,7 @@ It can be configured through some settings and different sections of the documen
 
 To install:
 
->npm install doctormake
+>npm install -g doctormake
 
 To generate the single HTML file output, the source file is passed to doctormake (NPM package):
 
