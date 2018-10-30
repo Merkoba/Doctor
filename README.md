@@ -22,7 +22,7 @@ This is not a tool to automatically generate documentation from source code.
 
 # Changelog
 
->v1.2.2
+>v1.2.3
 
 Added &lt;doc modal&gt; option to enable or disable image modals.
 
