@@ -1,8 +1,8 @@
 module.exports.generate = function(options)
 {
-	var keyboard_events = ""
-	var menu_keyboard_escape_1 = ""
-	var on_image_click = ""
+	let keyboard_events = ""
+	let menu_keyboard_escape_1 = ""
+	let on_image_click = ""
 
 	if(options.keyboard)
 	{
@@ -39,7 +39,7 @@ module.exports.generate = function(options)
 		`
 	}
 
-	var script = `
+	let script = `
 		<script>
 
 			const Doctor = {}
@@ -69,7 +69,7 @@ module.exports.generate = function(options)
 			{
 				Doctor.scroll_timer = (function()
 				{
-					var timer
+					let timer
 
 					return function()
 					{
@@ -84,7 +84,7 @@ module.exports.generate = function(options)
 
 				Doctor.search_timer = (function()
 				{
-					var timer
+					let timer
 
 					return function()
 					{
@@ -112,9 +112,9 @@ module.exports.generate = function(options)
 
 				Doctor.main.addEventListener("click", function(e)
 				{
-					var el = e.target
+					let el = e.target
 
-					var tag = el.tagName.toLowerCase()
+					let tag = el.tagName.toLowerCase()
 
 					if(tag === "a")
 					{
@@ -134,9 +134,9 @@ module.exports.generate = function(options)
 
 				Doctor.edge_menu_content_inner.addEventListener("click", function(e)
 				{
-					var el = e.target
+					let el = e.target
 
-					var tag = el.tagName.toLowerCase()
+					let tag = el.tagName.toLowerCase()
 
 					if(tag === "a")
 					{
@@ -293,9 +293,9 @@ module.exports.generate = function(options)
 
 			Doctor.search = function(highlight=true)
 			{
-				var lst = []
+				let lst = []
 
-				var input = Doctor.edge_menu_search_input.value.toLowerCase().trim()
+				let input = Doctor.edge_menu_search_input.value.toLowerCase().trim()
 
 				for(let item of Doctor.edge_menu_items)
 				{
@@ -343,14 +343,14 @@ module.exports.generate = function(options)
 
 			Doctor.check_scroll = function()
 			{	
-				var scrollTop = Math.round(Doctor.get_scrollTop())
+				let scrollTop = Math.round(Doctor.get_scrollTop())
 
 				if(scrollTop > 0)
 				{
 					Doctor.show_top_menu()
 
-					var scrollHeight = Math.round(Doctor.get_scrollHeight())
-					var clientHeight = Math.round(Doctor.get_clientHeight())
+					let scrollHeight = Math.round(Doctor.get_scrollHeight())
+					let clientHeight = Math.round(Doctor.get_clientHeight())
 
 					let d = scrollHeight - scrollTop
 

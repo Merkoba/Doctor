@@ -54,11 +54,13 @@ module.exports.generate = function(options)
 				flex-shrink: 1;
 				height: 100%;
 				margin: 0 auto;
-				padding-left: 2rem;
-				padding-right: 2rem;
-				padding-bottom: 4rem;
+				padding: 0;
+				margin-left: 2rem;
+				margin-right: 2rem;
+				margin-bottom: 4rem;
 				background-color: white;
 				color: var(--fcolor);
+				position: relative;
 			}
 
 			#doctor_footer
