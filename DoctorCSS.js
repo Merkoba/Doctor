@@ -60,7 +60,6 @@ module.exports.generate = function(options)
 				margin-bottom: 4rem;
 				background-color: white;
 				color: var(--fcolor);
-				position: relative;
 			}
 
 			#doctor_footer
