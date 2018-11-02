@@ -332,7 +332,7 @@ function generate_html()
 						</div>
 						<div id='doctor_edge_menu_content'>
 							<div id='doctor_edge_menu_content_inner'>
-								<h2 id='doctor_edge_menu_header' class='doctor_action' onclick="Doctor.go_to_top();doctor_hide_edge_menu()">${header}</h2>
+								<h2 id='doctor_edge_menu_header' class='doctor_action' onclick="Doctor.go_to_top();Doctor.hide_edge_menu()">${header}</h2>
 								<input id='doctor_edge_menu_search_input' type='text' placeholder='Search'>
 								${edge_sections_menu}
 							</div>
