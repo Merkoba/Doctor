@@ -350,7 +350,7 @@ function generate_html()
 
 				<div id='doctor_main'>
 
-					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.remove_hash()'>${header}</h1>
+					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.change_hash()'>${header}</h1>
 					
 					<div>${description}</div>
 					<br>

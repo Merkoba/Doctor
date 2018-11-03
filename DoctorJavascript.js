@@ -397,9 +397,16 @@ module.exports.generate = function(options)
 				Doctor.top_menu.style.pointerEvents = "none"
 			}
 
-			Doctor.remove_hash = function()
+			Doctor.change_hash = function(hash=false)
 			{
-				history.replaceState({}, document.title, window.location.href.split('#')[0])
+				let s = ""
+				
+				if(hash)
+				{
+					s = "#" + hash
+				}
+
+				history.replaceState({}, document.title, window.location.href.split('#')[0] + s)
 			}
 
 			Doctor.go_to_top = function()
@@ -411,7 +418,7 @@ module.exports.generate = function(options)
 					behavior: "smooth"
 				});
 
-				Doctor.remove_hash()
+				Doctor.change_hash()
 			}
 
 			Doctor.go_to_bottom = function()
@@ -497,6 +504,13 @@ module.exports.generate = function(options)
 			Doctor.scroll_to_element = function(el)
 			{
 				window.scrollTo(0, el.offsetTop)
+				
+				let tag = el.tagName.toLowerCase()
+
+				if(tag === "a" && el.name)
+				{
+					Doctor.change_hash(el.name)
+				}
 			}
 
 			Doctor.left_edge_click = function()

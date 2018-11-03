@@ -510,7 +510,7 @@
 
 				<div id='doctor_main'>
 
-					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.remove_hash()'>Doctor</h1>
+					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.change_hash()'>Doctor</h1>
 					
 					<div>A tool to generate documentation quickly<br><br> NPM Package: <a target="_blank" href="https://www.npmjs.com/package/doctormake">https://www.npmjs.com/package/doctormake</a><br><br> GitHub Repo: <a target="_blank" href="https://github.com/madprops/Doctor">https://github.com/madprops/Doctor</a></div>
 					<br>
@@ -612,7 +612,7 @@
 				</div>
 
 				<div class='doctor_section_content_container'>
-					Doctor is meant to be a way for others to easily read the documentation.<br> <br> Sections are visually separated so it&apos;s easy to tell them apart.<br><br><br> There are anchor links at the top for every section:<br><br> <img src="https://i.imgur.com/ptSWDNA.jpg" width="400px"><br> <br> The left menu is opened by clicking the colored edge.<br> It has anchor links to each section.<br> There is a search filter that searches section names as well as their content.<br> There are some keyboard events for searching and going to sections.<br><br> <img src="https://i.imgur.com/AqO1vgP.jpg" width="400px"><br><br><br> There&apos;s a top menu that appears when the document is scrolled.<br> The top menu has Prev, Top, Bottom, and Next buttons.<br> Prev scrolls to a previous section.<br> Next goes to the next section.<br> Top goes to the top of the document.<br> Bottom goes to the bottom of the document.<br> Some buttons become faded depending on the scroll position.<br><br> <img src="https://i.imgur.com/LxZcVok.jpg" width="400px"><br><br><br> Smooth scrolling is enabled when jumping through sections.<br><br> When images are clicked they are opened in a modal window:<br><br> <img src="https://i.imgur.com/7yQinRi.png" width="400px"><br> <br><br> There is a feedback icon when jumping to sections, next to the header.<br> This is to make it easy to know which section is the one you&apos;re looking for when there are multiple sections visible.<br> The feedback blinks for a while and disappears:<br><br> <img src="https://i.imgur.com/tBYKO79.gif" width="400px">
+					Doctor is meant to be a way for others to easily read the documentation.<br> <br> Sections are visually separated so it&apos;s easy to tell them apart.<br><br><br> There are anchor links at the top for every section:<br><br> <img src="https://i.imgur.com/ptSWDNA.jpg" width="400px"><br> <br> The left menu is opened by clicking the colored edge.<br> It has anchor links to each section.<br> There is a search filter that searches section names as well as their content.<br> There are some keyboard events for searching and going to sections.<br><br> <img src="https://i.imgur.com/AqO1vgP.jpg" width="400px"><br><br><br> There&apos;s a top menu that appears when the document is scrolled.<br> The top menu has Prev, Top, Bottom, and Next buttons.<br> Prev scrolls to a previous section.<br> Next goes to the next section.<br> Top goes to the top of the document.<br> Bottom goes to the bottom of the document.<br> Some buttons become faded depending on the scroll position.<br><br> <img src="https://i.imgur.com/LxZcVok.jpg" width="400px"><br><br><br> Smooth scrolling is enabled when jumping through sections.<br><br> When images are clicked they are opened in a modal window:<br><br> <img src="https://i.imgur.com/7yQinRi.png" width="400px"><br> <br><br> Section headers can be clicked, which scrolls the page to them, as well as adding a # (hash) to the URL with the proper anchor section.<br><br> There is a feedback icon when jumping to sections, next to the header.<br> This is to make it easy to know which section is the one you&apos;re looking for when there are multiple sections visible.<br> The feedback blinks for a while and disappears:<br><br> <img src="https://i.imgur.com/tBYKO79.gif" width="400px">
 				</div>
 
 			</div>
@@ -1084,9 +1084,16 @@
 				Doctor.top_menu.style.pointerEvents = "none"
 			}
 
-			Doctor.remove_hash = function()
+			Doctor.change_hash = function(hash=false)
 			{
-				history.replaceState({}, document.title, window.location.href.split('#')[0])
+				let s = ""
+				
+				if(hash)
+				{
+					s = "#" + hash
+				}
+
+				history.replaceState({}, document.title, window.location.href.split('#')[0] + s)
 			}
 
 			Doctor.go_to_top = function()
@@ -1098,7 +1105,7 @@
 					behavior: "smooth"
 				});
 
-				Doctor.remove_hash()
+				Doctor.change_hash()
 			}
 
 			Doctor.go_to_bottom = function()
@@ -1184,6 +1191,13 @@
 			Doctor.scroll_to_element = function(el)
 			{
 				window.scrollTo(0, el.offsetTop)
+				
+				let tag = el.tagName.toLowerCase()
+
+				if(tag === "a" && el.name)
+				{
+					Doctor.change_hash(el.name)
+				}
 			}
 
 			Doctor.left_edge_click = function()

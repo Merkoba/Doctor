@@ -128,6 +128,8 @@
 	<img src='https://i.imgur.com/7yQinRi.png' width="400px">
 	
 
+	Section headers can be clicked, which scrolls the page to them, as well as adding a # (hash) to the URL with the proper anchor section.
+
 	There is a feedback icon when jumping to sections, next to the header.
 	This is to make it easy to know which section is the one you're looking for when there are multiple sections visible.
 	The feedback blinks for a while and disappears:
