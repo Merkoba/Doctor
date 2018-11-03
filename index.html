@@ -249,7 +249,7 @@
 				overflow: hidden;
 			}
 
-			.doctor_section_header
+			.doctor_section_header, #doctor_main_header
 			{
 				display: inline-block;
 				white-space: initial;
@@ -451,6 +451,11 @@
 				text-decoration: underline !important;
 			}
 
+			.doctor_pointer
+			{
+				cursor: pointer;
+			}
+
 		</style>
 	
 
@@ -504,16 +509,18 @@
 			<div id='doctor_main_container'>
 
 				<div id='doctor_main'>
-					<a href="" class='section_header_anchor'>
-						<h1>Doctor</h1>
-					</a>
+
+					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.remove_hash()'>Doctor</h1>
+					
 					<div>A tool to generate documentation quickly<br><br> NPM Package: <a target="_blank" href="https://www.npmjs.com/package/doctormake">https://www.npmjs.com/package/doctormake</a><br><br> GitHub Repo: <a target="_blank" href="https://github.com/madprops/Doctor">https://github.com/madprops/Doctor</a></div>
 					<br>
+
 					<div>
 						<div class='doctor_sections_menu'>
 							<a href="#whatisit" class='doctor_section_anchor_link' data-section-id='doctor_section_id_whatisit'>What Is It</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#howdoesitwork" class='doctor_section_anchor_link' data-section-id='doctor_section_id_howdoesitwork'>How Does It Work</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#basicusage" class='doctor_section_anchor_link' data-section-id='doctor_section_id_basicusage'>Basic Usage</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#availabletypes" class='doctor_section_anchor_link' data-section-id='doctor_section_id_availabletypes'>Available Types</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#installation" class='doctor_section_anchor_link' data-section-id='doctor_section_id_installation'>Installation</a><br><br><a href="#feedback" class='doctor_section_anchor_link' data-section-id='doctor_section_id_feedback'>Feedback</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#license" class='doctor_section_anchor_link' data-section-id='doctor_section_id_license'>License</a>
 						</div>
 					</div>
+
 					<div>
 						
 			<div class='doctor_section' id='doctor_section_id_whatisit'>
@@ -687,6 +694,7 @@
 			</div>
 			
 					</div>
+
 				</div>
 				
 				<div id='doctor_footer'>Thanks For Reading!</div>
@@ -1076,6 +1084,11 @@
 				Doctor.top_menu.style.pointerEvents = "none"
 			}
 
+			Doctor.remove_hash = function()
+			{
+				history.replaceState({}, document.title, window.location.href.split('#')[0])
+			}
+
 			Doctor.go_to_top = function()
 			{
 				Doctor.hide_top_menu()
@@ -1084,6 +1097,8 @@
 					top: 0,
 					behavior: "smooth"
 				});
+
+				Doctor.remove_hash()
 			}
 
 			Doctor.go_to_bottom = function()

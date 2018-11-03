@@ -397,6 +397,11 @@ module.exports.generate = function(options)
 				Doctor.top_menu.style.pointerEvents = "none"
 			}
 
+			Doctor.remove_hash = function()
+			{
+				history.replaceState({}, document.title, window.location.href.split('#')[0])
+			}
+
 			Doctor.go_to_top = function()
 			{
 				Doctor.hide_top_menu()
@@ -405,6 +410,8 @@ module.exports.generate = function(options)
 					top: 0,
 					behavior: "smooth"
 				});
+
+				Doctor.remove_hash()
 			}
 
 			Doctor.go_to_bottom = function()

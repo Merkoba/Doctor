@@ -349,19 +349,22 @@ function generate_html()
 			<div id='doctor_main_container'>
 
 				<div id='doctor_main'>
-					<a href="" class='section_header_anchor'>
-						<h1>${header}</h1>
-					</a>
+
+					<h1 id='doctor_main_header' class='doctor_action doctor_pointer' onclick='Doctor.remove_hash()'>${header}</h1>
+					
 					<div>${description}</div>
 					<br>
+
 					<div>
 						<div class='doctor_sections_menu'>
 							${sections_menu_html}
 						</div>
 					</div>
+
 					<div>
 						${sections_html}
 					</div>
+
 				</div>
 				
 				${footer_html}

@@ -244,7 +244,7 @@ module.exports.generate = function(options)
 				overflow: hidden;
 			}
 
-			.doctor_section_header
+			.doctor_section_header, #doctor_main_header
 			{
 				display: inline-block;
 				white-space: initial;
@@ -444,6 +444,11 @@ module.exports.generate = function(options)
 			.doctor_edge_menu_item_highlight
 			{
 				text-decoration: underline !important;
+			}
+
+			.doctor_pointer
+			{
+				cursor: pointer;
 			}
 
 		</style>
