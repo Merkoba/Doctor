@@ -1,6 +1,6 @@
 {
 	"name": "doctormake",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"main": "doctor.js",
 	"scripts": {
 		"test": "echo \"Error: No test specified\" && exit 1"

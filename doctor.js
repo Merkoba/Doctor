@@ -256,7 +256,9 @@ function generate_html()
 				<a name="${cname}" class='doctor_section_anchor'></a>
 
 				<div class='doctor_section_header_container'>
-					<h2 class='doctor_section_header'>${name}</h2>
+					<a href="#${cname}" class='section_header_anchor'>
+						<h2 class='doctor_section_header'>${name}</h2>
+					</a>
 					<h2 class='doctor_section_feedback'>*</h2>
 				</div>
 
