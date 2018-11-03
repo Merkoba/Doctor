@@ -19,38 +19,3 @@ This is meant to be a simple one-page documentation generator, yet aiming to aid
 This is not a tool to automatically generate documentation from source code.
 
 [Demo and Documentation](https://madprops.github.io/Doctor/)
-
-# Changelog
-
->v1.3.1
-
-CSS fix on left menu.
-
-Version and homepage is now read from package.json
-
-
->v1.3.0
-
-Separated Javascript and CSS generators into their own files.
-
-Added &lt;doc footer&gt; which allows a footer to be shown at the bottom.
-
-Other code refactoring.
-
-
->v1.2.3
-
-Added &lt;doc modal&gt; option to enable or disable image modals.
-
-Fixes in documentation.
-
-
->v1.1.1
-
-&lt;code&gt; is now &lt;xcodex&gt; to avoid problems when using &lt;code&gt;, which is a standard tag, inside a code sample.
-
-Changed the code sample style.
-
-Parsing errors should be more verbose now.
-
-Encapsulated CSS creation in its own function.
