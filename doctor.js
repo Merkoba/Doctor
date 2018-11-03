@@ -349,7 +349,9 @@ function generate_html()
 			<div id='doctor_main_container'>
 
 				<div id='doctor_main'>
-					<h1>${header}</h1>
+					<a href="" class='section_header_anchor'>
+						<h1>${header}</h1>
+					</a>
 					<div>${description}</div>
 					<br>
 					<div>
