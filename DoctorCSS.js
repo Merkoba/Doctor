@@ -136,8 +136,6 @@ module.exports.generate = function(options)
 			a.section_header_anchor:visited, a.section_header_anchor:link, a.section_header_anchor:hover
 			{
 				color: inherit;
-				text-decoration: none;
-				transition: text-shadow 500ms;
 			}
 
 			a:hover
