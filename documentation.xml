@@ -9,7 +9,7 @@
 
 	NPM Package: <a target='_blank' href='https://www.npmjs.com/package/doctormake'>https://www.npmjs.com/package/doctormake</a>
 
-	GitHub Repo: <a target='_blank' href='https://github.com/madprops/Doctor'>https://github.com/madprops/Doctor</a>
+	GitHub Repo: <a target='_blank' href='https://github.com/Merkoba/Doctor'>https://github.com/Merkoba/Doctor</a>
 </doc>
 
 <doc section name='What Is It'>
@@ -235,7 +235,7 @@
 
 	And then to use it: <xcodex>doctormake input output</xcodex>
 
-	To run it manually download a copy from <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a>.
+	To run it manually download a copy from <a target='_blank' href='https://github.com/Merkoba/Doctor'>the GitHub repo</a>.
 
 	Run <xcodex>npm install</xcodex> in the directory.
 
@@ -243,7 +243,7 @@
 </doc>
 
 <doc section name='Feedback'>
-	If there's a problem regarding Doctor, or you have an idea to improve it, you can try submitting an Issue in the <a target='_blank' href='https://github.com/madprops/Doctor'>the GitHub repo</a> where I might respond.
+	If there's a problem regarding Doctor, or you have an idea to improve it, you can try submitting an Issue in the <a target='_blank' href='https://github.com/Merkoba/Doctor'>the GitHub repo</a> where I might respond.
 </doc>
 
 <doc section name='License'>

@@ -1,6 +1,6 @@
 {
 	"name": "doctormake",
-	"version": "1.4.4",
+	"version": "1.4.5",
 	"main": "doctor.js",
 	"scripts": {
 		"test": "echo \"Error: No test specified\" && exit 1"
@@ -11,7 +11,7 @@
 		"formatter",
 		"template"
 	],
-	"author": "madprops <mfmadprops@gmail.com>",
+	"author": "Merkoba <merkoba@airmail.cc>",
 	"license": "Apache 2.0",
 	"bin": {
 		"doctormake": "./doctor.js"
@@ -19,13 +19,13 @@
 	"repository": 
 	{
 		"type": "git",
-		"url": "git+https://github.com/madprops/Doctor.git"
+		"url": "git+https://github.com/Merkoba/Doctor.git"
 	},
 	"bugs": 
 	{
-		"url": "https://github.com/madprops/Doctor/issues"
+		"url": "https://github.com/Merkoba/Doctor/issues"
 	},
-	"homepage": "https://madprops.github.io/Doctor/",
+	"homepage": "https://merkoba.github.io/Doctor/",
 	"dependencies": {
 		"cheerio": "~1.0.0-rc.2"
 	}

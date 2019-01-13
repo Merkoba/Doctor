@@ -18,4 +18,4 @@ This is meant to be a simple one-page documentation generator, yet aiming to aid
 
 This is not a tool to automatically generate documentation from source code.
 
-[Demo and Documentation](https://madprops.github.io/Doctor/)
+[Demo and Documentation](https://merkoba.github.io/Doctor/)
